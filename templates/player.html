@@ -20,7 +20,7 @@
       </div>
       <div class="row">
         <input type="hidden" name="id" value={{ score.id }}></input>
-        <select name="avatar" id="avatars" class="col col-md-3 mt-0 h1">
+        <select name="avatar" id="avatars" class="col col-md-3 mt-0 h1 alert alert-warning">
           {% for a in avatars %}
           <option value="{{ a }}" 
           {% if a == score.avatar %}
@@ -29,8 +29,8 @@
           >{{ avatars[a] }}</option>
           {% endfor %}
         </select>
-        <input type="text" class="col col-md-6 mt-0 h1" name="playername" value={{ score.playername }}></input>
-        <input type="number" class="col col-md-3 mt-0 h1 text-right" name="points" value={{ score.points }}></input>
+        <input type="text" class="col col-md-6 mt-0 h1 alert alert-warning" name="playername" value={{ score.playername }}></input>
+        <input type="number" class="col col-md-3 mt-0 h1 text-right alert alert-warning" name="points" value={{ score.points }}></input>
       </div>
     </div>
   </div>

@@ -1,17 +1,109 @@
 {%- extends "bootstrap/base.html" %}
 
-{% block title %}Web App with Python and CockroachDB{% endblock %}
+{% block title %}Game Leaderboard{% endblock %}
 
 {% import "bootstrap/fixes.html" as fixes %}
 
 {% block head %}
-{{super()}}
+<div class="row">
+  <select name="avatar" id="avatars" class="col col-md-3 mt-0 h1 ml-auto alert alert-warning" onchange="setTheme(this.value)">
+    <option value="theme-sunrise">Sunrise</option>
+    <option value="theme-ocean-breeze">Ocean Breeze</option>
+    <option value="theme-vanilla-latte">Vanilla Latte</option>
+    <option value="theme-midnight">Midnight</option>
+    <option value="theme-forest-night">Forest Night</option>
+    <option value="theme-cosmos">Cosmos</option>
+  </select>
+</div>
 
-{{fixes.ie8()}}
+{{ super() }}
+{{ fixes.ie8() }}
 {%- endblock %}
 
 {% block styles -%}
-   {{super()}}  {# do not forget to call super or Bootstrap's own stylesheets
-                   will disappear! #}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-{% endblock %}
+{{ super() }}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+  /* Light mode themes */
+  .theme-sunrise {
+    --bg-color: #FFF8E7;
+    --text-color: #333;
+    --primary-color: #FF8C42;
+    --secondary-color: #FFE08A;
+  }
+  .theme-ocean-breeze {
+    --bg-color: #E0F7FA;
+    --text-color: #2B3A42;
+    --primary-color: #00B8D4;
+    --secondary-color: #4DD0E1;
+  }
+  .theme-vanilla-latte {
+    --bg-color: #FFF3E0;
+    --text-color: #5D4037;
+    --primary-color: #FFCC80;
+    --secondary-color: #FFE0B2;
+  }
+
+  /* Dark mode themes */
+  .theme-midnight {
+    --bg-color: #2D2D2D;
+    --text-color: #FFFFFF;
+    --primary-color: #6200EA;
+    --secondary-color: #BB86FC;
+  }
+  .theme-forest-night {
+    --bg-color: #1B1B1B;
+    --text-color: #A5D6A7;
+    --primary-color: #388E3C;
+    --secondary-color: #81C784;
+  }
+  .theme-cosmos {
+    --bg-color: #0D1B2A;
+    --text-color: #F8F9FA;
+    --primary-color: #1B263B;
+    --secondary-color: #415A77;
+  }
+
+  /* General theme styling */
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  .alert-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-color) !important;
+  }
+  .alert-warning {
+    background-color: var(--secondary-color) !important;
+    color: var(--text-color) !important;
+  }
+</style>
+{%- endblock %}
+
+{% block content %}
+{{ super() }}
+{%- endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  function setTheme(theme) {
+    // Remove any existing theme classes
+    document.body.classList.remove(
+      'theme-sunrise', 'theme-ocean-breeze', 'theme-vanilla-latte',
+      'theme-midnight', 'theme-forest-night', 'theme-cosmos'
+    );
+    // Add the selected theme
+    document.body.classList.add(theme);
+    // Optional: Save the theme to local storage to persist between sessions
+    localStorage.setItem('selectedTheme', theme);
+  }
+
+  // Apply the saved theme on load, if available
+  document.addEventListener("DOMContentLoaded", function () {
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) setTheme(savedTheme);
+  });
+</script>
+{%- endblock %}
